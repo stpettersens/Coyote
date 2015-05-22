@@ -57,7 +57,7 @@ class Coyote:
 		tree = ET.parse(headers_file)
 		root = tree.getroot()
 		for child in root.findall('header'):
-			Coyote.headers.append('{0}:{1}'.format(child.get('name'), child.get('value')))
+			Coyote.headers.append('{0}-->{1}'.format(child.get('name'), child.get('value')))
 
 	# Serve content forever.
 	def serve(self, directory, port):
@@ -84,7 +84,7 @@ class CoyoteHandler(BaseHTTPRequestHandler):
 
 			# Load optional headers.
 			for header in Coyote.headers:
-				h = header.split(':')
+				h = header.split('-->')
 				self.send_header(h[0], h[1])
 
 			root, ext = path.splitext(self.path)
