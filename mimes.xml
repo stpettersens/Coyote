@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mimes>
+	<mime type="text/html" ext=".html">
+		<description>HTML file</description>
+	</mime>
+	<mime type="text/html" ext=".htm">
+		<description>HTML file</description>
+	</mime>
+	<mime type="application/xml" ext=".xml">
+		<description>XML file</description>
+	</mime>
+	<mime type="application/json" ext=".json">
+		<description>JSON file</description>
+	</mime>
+	<mime type="text/javascript" ext=".js">
+		<description>JavaScript file</description>
+	</mime>
+</mimes>
