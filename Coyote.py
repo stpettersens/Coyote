@@ -34,7 +34,7 @@ class Coyote:
 		elif version:
 			print(Coyote.webserver_str) # Print web server string, which conains version (1.0).
 		else:
-			if verbose == True: Coyote.verbose = True # Set to be verbose.
+			if verbose: Coyote.verbose = True # Set to be verbose.
 			if port == None: port = 80 # Use port 80 when port is unspecified.
 			if mimes == None: mimes = 'mimes.xml' # Default mimes configuration is mimes.xml
 			if headers == None: headers = 'headers.xml' # Default headers configuration is...
@@ -45,19 +45,24 @@ class Coyote:
 
 	# Load MIME types.
 	def loadMimes(self, mimes_file):
-		tree = ET.parse(mimes_file)
-		root = tree.getroot()
-		for child in root.findall('mime'):
-			Coyote.exts.append(child.get('ext'))
-			Coyote.mimes.append(child.get('type'))
-			Coyote.descs.append(child.find('description').text)
+		if path.isfile(mimes_file):
+			tree = ET.parse(mimes_file)
+			root = tree.getroot()
+			for child in root.findall('mime'):
+				Coyote.exts.append(child.get('ext'))
+				Coyote.mimes.append(child.get('type'))
+				Coyote.descs.append(child.find('description').text)
+		else:
+			print('MIMES file required ({0}). Not found.'.format(mimes_file))
+			sys.exit(1)
 
 	# Load optional response headers.
 	def loadHeaders(self, headers_file):
-		tree = ET.parse(headers_file)
-		root = tree.getroot()
-		for child in root.findall('header'):
-			Coyote.headers.append('{0}-->{1}'.format(child.get('name'), child.get('value')))
+		if path.isfile(headers_file):
+			tree = ET.parse(headers_file)
+			root = tree.getroot()
+			for child in root.findall('header'):
+				Coyote.headers.append('{0}-->{1}'.format(child.get('name'), child.get('value')))
 
 	# Serve content forever.
 	def serve(self, directory, port):
